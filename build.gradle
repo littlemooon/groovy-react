@@ -1,0 +1,50 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "org.grooscript:grooscript-gradle-plugin:1.2.3"
+  }
+}
+
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: "org.grooscript.conversion"
+
+ext {
+  groovyVersion = '2.4.6'
+  gradleCurrentVersion = '2.11'
+  grooscriptVersion = '1.2.3'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion
+  compile group: 'org.codehaus.groovy', name: 'groovy-json', version: groovyVersion
+  compile ("org.grooscript:grooscript:${grooscriptVersion}") {
+    exclude module: 'groovy'
+    exclude module: 'groovy-json'
+  }
+}
+
+grooscript {
+  consoleInfo = true
+  source = ['src/groovy']
+  destination = 'src/js'
+  classpath = ['src/groovy']
+  includeDependencies = true
+  recursive = true
+  initialText = '''//Grooscript converted file
+import React from 'react';
+import gs from 'grooscript';
+import Button from '../Button';
+
+'''
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = gradleCurrentVersion
+}
