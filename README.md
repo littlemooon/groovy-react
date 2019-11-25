@@ -10,6 +10,8 @@ There are two steps to the build process:
 
 This allows you to use React components in Groovy components. Then use the compiled Groovy components in a React application.
 
+![screenshot](./screenshot.png)
+
 # Development
 
 ```bash
